@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>Weather Forecast</title>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div id="root">
+      <!-- Header -->
+      <header>
+        <div class="container header-container">
+          <h1>
+            <i class="fas fa-cloud-sun"></i>
+            Weather Forecast
+          </h1>
+          <nav class="nav-menu">
+            <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+            <label for="menu-toggle" class="menu-toggle-label">
+              <span class="hamburger-icon"></span>
+            </label>
+            <ul class="menu-items">
+              <li><a href="/">Home</a></li>
+              <li><a href="weather-data.html">Example Data</a></li>
+              <li><a href="weather-blank.html">Blank State</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- Search Form -->
+        <section class="search-section">
+          <div class="card">
+            <h2>Search for a city</h2>
+            <form id="cityForm">
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="cityInput"
+                  placeholder="Enter city name"
+                  aria-label="City name"
+                />
+                <button
+                  type="button"
+                  id="clearButton"
+                  class="clear-button"
+                  aria-label="Clear input"
+                >
+                  <i class="fas fa-times-circle"></i>
+                </button>
+              </div>
+              <button
+                type="submit"
+                id="searchButton"
+                disabled
+                class="btn-primary"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Desktop layout container for main content and sidebar -->
+        <div class="desktop-container">
+          <!-- Main content - Weather and Map -->
+          <div class="main-content">
+            <!-- Weather Display -->
+            <section class="weather-section">
+              <div class="card">
+                <!-- Weather data container -->
+                <div id="weatherData">
+                  <div class="weather-header">
+                    <div>
+                      <h2 id="cityName">London, GB</h2>
+                      <p id="currentDateTime">Monday, April 29, 2025</p>
+                    </div>
+                    <div class="last-updated">
+                      <i class="fas fa-history"></i>
+                      <span id="lastUpdated">Updated just now</span>
+                    </div>
+                  </div>
+
+                  <div class="weather-content">
+                    <div class="current-weather">
+                      <div class="weather-primary">
+                        <div class="weather-icon">
+                          <img
+                            src="https://openweathermap.org/img/wn/04d@2x.png"
+                            alt="Weather condition"
+                          />
+                        </div>
+                        <div>
+                          <div class="temperature">15°C</div>
+                          <div class="weather-description">Broken Clouds</div>
+                        </div>
+                      </div>
+
+                      <div class="weather-details">
+                        <div class="weather-detail">
+                          <i class="fas fa-wind"></i>
+                          <div>
+                            <p>Wind</p>
+                            <p>4.1 m/s</p>
+                          </div>
+                        </div>
+                        <div class="weather-detail">
+                          <i class="fas fa-tint"></i>
+                          <div>
+                            <p>Humidity</p>
+                            <p>76%</p>
+                          </div>
+                        </div>
+                        <div class="weather-detail">
+                          <i class="fas fa-compress-alt"></i>
+                          <div>
+                            <p>Pressure</p>
+                            <p>1015 hPa</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Empty state (initially hidden in this example) -->
+                <div class="state-container hidden">
+                  <div class="state-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                  </div>
+                  <h3>No weather data to display</h3>
+                  <p>Search for a city to see the current weather</p>
+                </div>
+
+                <!-- Loading state (initially hidden in this example) -->
+                <div class="state-container hidden">
+                  <div class="spinner" role="status" aria-label="loading">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <p>Loading weather data...</p>
+                </div>
+
+                <!-- Error state (initially hidden in this example) -->
+                <div class="state-container hidden">
+                  <div class="state-icon error">
+                    <i class="fas fa-exclamation-circle"></i>
+                  </div>
+                  <h3>Unable to fetch weather data</h3>
+                  <p>
+                    City not found. Please check the spelling and try again.
+                  </p>
+                  <button class="btn-primary">Try Again</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Map Display -->
+            <section class="map-section">
+              <div class="card">
+                <div class="section-header">
+                  <h2>
+                    <i class="fas fa-map-marker-alt"></i>
+                    Location Map
+                  </h2>
+                </div>
+                <div class="map-container">
+                  <!-- Map image (Base64 placeholder) -->
+                  <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAH0CAYAAACuKActAAAACXBIWXMAAAsTAAALEwEAmpwYAAAIsGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDggNzkuMTY0MDM2LCAyMDE5LzA4LzEzLTAxOjA2OjU3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBHSW1nPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvZy9pbWcvIiB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDRTQ2MDA0QkJBNzExMUVBQjEzQ0E0NkZBODhGQzBDMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3OGRkN2M1YS1jYmY5LTQzZDMtOGYzNi05NmYwYTBhZTg3NGUiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpDRTQ2MDA0QkJBNzExMUVBQjEzQ0E0NkZBODhGQzBDMyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOSAoTWFjaW50b3NoKSIgeG1wOk1vZGlmeURhdGU9IjIwMjAtMDQtMDZUMDk6NDU6MTgrMDI6MDAiIHRpZmY6T3JpZW50YXRpb249IjEiIHRpZmY6WFJlc29sdXRpb249IjcyMDAwMC8xMDAwMCIgdGlmZjpZUmVzb2x1dGlvbj0iNzIwMDAwLzEwMDAwIiB0aWZmOlJlc29sdXRpb25Vbml0PSIyIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9IkVCQkFDNzBGRDQ2MzdBOEQ4Mzk5MUJBN0U2NzVEQzJGIiBzdFJlZjpkb2N1bWVudElEPSJFQkJBQzcwRkQ0NjM3QThEODM5OTFCQTdFNjc1REMyRiIvPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpmZWFkNmU1NC04NmY2LTQyYzktYTZjMy1lODM3ZjI5YzFiYjIiIHN0RXZ0OndoZW49IjIwMjAtMDQtMDZUMDk6NDU6MDIrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo3OGRkN2M1YS1jYmY5LTQzZDMtOGYzNi05NmYwYTBhZTg3NGUiIHN0RXZ0OndoZW49IjIwMjAtMDQtMDZUMDk6NDU6MTgrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8dGlmZjpCaXRzUGVyU2FtcGxlPiA8cmRmOlNlcT4gPHJkZjpsaT44PC9yZGY6bGk+IDxyZGY6bGk+ODwvcmRmOmxpPiA8cmRmOmxpPjg8L3JkZjpsaT4gPC9yZGY6U2VxPiA8L3RpZmY6Qml0c1BlclNhbXBsZT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5nXmviAAAFcklEQVR4nO3XsQ3AQAjAQJz9d06aTZIiRfTOSPCPvPc+AAAAgKn1nQMAAAAuE3QAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIEHQAAAAIWDnnBgAAAFxlQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAIAAQQcAAICA/wG8uQJj8TRSagAAAABJRU5ErkJggg=="
+                    alt="Map of London"
+                  />
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Sidebar - Search History -->
+          <div class="sidebar">
+            <!-- Search History -->
+            <section class="history-section">
+              <div class="card">
+                <div class="section-header">
+                  <h2>
+                    <i class="fas fa-history"></i>
+                    Search History
+                  </h2>
+                </div>
+
+                <div class="history-container">
+                  <div class="history-list">
+                    <!-- History items -->
+                    <div class="history-item">
+                      <div class="history-item-city">
+                        <div class="city-icon">
+                          <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="city-info">
+                          <h3>London, GB</h3>
+                          <p>Apr 29, 09:30 AM</p>
+                        </div>
+                      </div>
+                      <div class="history-item-weather">
+                        <p>15°C</p>
+                        <p>Broken Clouds</p>
+                      </div>
+                    </div>
+
+                    <div class="history-item">
+                      <div class="history-item-city">
+                        <div class="city-icon">
+                          <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="city-info">
+                          <h3>Paris, FR</h3>
+                          <p>Apr 29, 08:45 AM</p>
+                        </div>
+                      </div>
+                      <div class="history-item-weather">
+                        <p>17°C</p>
+                        <p>Partly Cloudy</p>
+                      </div>
+                    </div>
+
+                    <div class="history-item">
+                      <div class="history-item-city">
+                        <div class="city-icon">
+                          <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="city-info">
+                          <h3>New York, US</h3>
+                          <p>Apr 29, 08:30 AM</p>
+                        </div>
+                      </div>
+                      <div class="history-item-weather">
+                        <p>12°C</p>
+                        <p>Light Rain</p>
+                      </div>
+                    </div>
+
+                    <div class="history-item">
+                      <div class="history-item-city">
+                        <div class="city-icon">
+                          <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="city-info">
+                          <h3>Tokyo, JP</h3>
+                          <p>Apr 29, 07:15 AM</p>
+                        </div>
+                      </div>
+                      <div class="history-item-weather">
+                        <p>22°C</p>
+                        <p>Clear Sky</p>
+                      </div>
+                    </div>
+
+                    <div class="history-item">
+                      <div class="history-item-city">
+                        <div class="city-icon">
+                          <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="city-info">
+                          <h3>Berlin, DE</h3>
+                          <p>Apr 29, 06:45 AM</p>
+                        </div>
+                      </div>
+                      <div class="history-item-weather">
+                        <p>14°C</p>
+                        <p>Few Clouds</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="history-actions">
+                    <button class="btn-secondary">
+                      <i class="fas fa-trash-alt"></i>
+                      Clear History
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container">
+          <p>
+            Weather Forecast App &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+          </p>
+          <p>Weather data provided by OpenWeatherMap</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
